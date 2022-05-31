@@ -91,7 +91,7 @@ def gen_course_markup():
 
 def get_group_names():
     group_names = []
-    for i in db_functions.get_current_course_groups_list(course_data):
+    for i in db_functions.get_current_course_groups_list(course_data, faculty_data):
         group_names.append(i[0])
     return group_names
 
@@ -110,7 +110,7 @@ def gen_teacher_markup():
 
 def get_subject_names():
     subject_names = []
-    for i in db_functions.get_current_subject_group_list(group_data):
+    for i in db_functions.get_current_subject_group_list(group_data, course_data):
         subject_names.append(i[0])
     return subject_names
 

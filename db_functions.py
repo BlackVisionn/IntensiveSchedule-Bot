@@ -18,18 +18,18 @@ def get_current_faculty_courses_list(faculty_data):
         return curs.fetchall()
 
 
-def get_current_course_groups_list(course_data):
+def get_current_course_groups_list(course_data, faculty_data):
     with sql.connect('intensive_schedule.db') as db:
         curs = db.cursor()
-        curs.execute("Select group_name from groups JOIN course ON groups.id_course = course.id_course where course_name == ?", (course_data,))
+        curs.execute("Select group_name from groups JOIN faculty ON course.id_faculty = faculty.id_faculty JOIN course ON groups.id_course = course.id_course where course_name == ? AND faculty_name == ?", (course_data, faculty_data))
 
         return curs.fetchall()
 
 
-def get_current_subject_group_list(group_data):
+def get_current_subject_group_list(group_data, course_data):
     with sql.connect('intensive_schedule.db') as db:
         curs = db.cursor()
-        curs.execute("SELECT subject_name FROM subjects JOIN groups ON subjects.id_group = groups.id_group where group_name == ?", (group_data,))
+        curs.execute("SELECT subject_name FROM subjects JOIN course ON groups.id_course = course.id_course JOIN groups ON subjects.id_group = groups.id_group where group_name == ? AND course_name == ?", (group_data, course_data))
 
         return curs.fetchall()
 
